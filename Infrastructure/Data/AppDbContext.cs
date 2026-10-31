@@ -1,4 +1,3 @@
-using System.Data;
 using Npgsql;
 
 namespace Infrastructure.Data;
@@ -6,5 +5,5 @@ namespace Infrastructure.Data;
 public class AppDbContext
 {
     private string connectionString = "Host=localhost;Port=5432;Database=crm;Username=postgres;Password=0510";
-    public IDbConnection Connection() => new NpgsqlConnection(connectionString);
+    public NpgsqlConnection Connection() => new(connectionString);
 }

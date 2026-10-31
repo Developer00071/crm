@@ -23,25 +23,25 @@ while (true)
     Console.WriteLine("0 - Exit");
     Console.WriteLine("==================================");
     Console.Write("Choose option: ");
-    var option = Console.ReadLine();
+    var option = await Console.In.ReadLineAsync();
     Console.WriteLine("==================================");
 
     switch (option)
     {
         case "1":
-            ManageStudents(studentService);
+            await ManageStudents(studentService);
             break;
         case "2":
-            ManageCourses(courseService);
+            await ManageCourses(courseService);
             break;
         case "3":
-            ManageGroups(groupService);
+            await ManageGroups(groupService);
             break;
         case "4":
-            ManageMentors(mentorService);
+            await ManageMentors(mentorService);
             break;
         case "5":
-            ManageStudentGroups(studentGroupService);
+            await ManageStudentGroups(studentGroupService);
             break;
         case "0":
             Console.WriteLine("Exiting ...");
@@ -56,7 +56,7 @@ while (true)
     Console.Clear();
 }
 
-static void ManageStudents(StudentService studentService)
+static async Task ManageStudents(StudentService studentService)
 {
     Console.WriteLine("1 - Show all students");
     Console.WriteLine("2 - Show student");
@@ -64,39 +64,39 @@ static void ManageStudents(StudentService studentService)
     Console.WriteLine("4 - Update student");
     Console.WriteLine("5 - Delete student");
     Console.Write("Choose option: ");
-    var option = Console.ReadLine();
+    var option = await Console.In.ReadLineAsync();
 
     switch (option)
     {
         case "1":
-            studentService.GetAllStudents();
+            await studentService.GetAllStudentsAsync();
             break;
         case "2":
             Console.Write("Enter id: ");
-            var studentId = Convert.ToInt32(Console.ReadLine());
-            studentService.GetStudent(studentId);
+            var studentId = Convert.ToInt32(await Console.In.ReadLineAsync());
+            await studentService.GetStudentAsync(studentId);
             break;
         case "3":
-            studentService.AddStudent(new Student
+            await studentService.AddStudentAsync(new Student
             {
-                Fullname = ReadString("Enter fullname: "),
-                Email = ReadString("Enter email: "),
-                Phone = ReadString("Enter phone: "),
-                EnrollmentDate = ReadDateOnly("Enter enrollment date (yyyy-MM-dd): ")
+                Fullname = await ReadString("Enter fullname: "),
+                Email = await ReadString("Enter email: "),
+                Phone = await ReadString("Enter phone: "),
+                EnrollmentDate = await ReadDateOnly("Enter enrollment date (yyyy-MM-dd): ")
             });
             break;
         case "4":
-            studentService.UpdateStudent(new Student
+            await studentService.UpdateStudentAsync(new Student
             {
-                StudentId = ReadInt("Enter id: "),
-                Fullname = ReadString("Enter fullname: "),
-                Email = ReadString("Enter email: "),
-                Phone = ReadString("Enter phone: "),
-                EnrollmentDate = ReadDateOnly("Enter enrollment date (yyyy-MM-dd): ")
+                StudentId = await ReadInt("Enter id: "),
+                Fullname = await ReadString("Enter fullname: "),
+                Email = await ReadString("Enter email: "),
+                Phone = await ReadString("Enter phone: "),
+                EnrollmentDate = await ReadDateOnly("Enter enrollment date (yyyy-MM-dd): ")
             });
             break;
         case "5":
-            studentService.DeleteStudent(ReadInt("Enter id: "));
+            await studentService.DeleteStudentAsync(await ReadInt("Enter id: "));
             break;
         default:
             Console.WriteLine("Invalid option.");
@@ -104,7 +104,7 @@ static void ManageStudents(StudentService studentService)
     }
 }
 
-static void ManageCourses(CourseService courseService)
+static async Task ManageCourses(CourseService courseService)
 {
     Console.WriteLine("1 - Show all courses");
     Console.WriteLine("2 - Show course");
@@ -112,35 +112,35 @@ static void ManageCourses(CourseService courseService)
     Console.WriteLine("4 - Update course");
     Console.WriteLine("5 - Delete course");
     Console.Write("Choose option: ");
-    var option = Console.ReadLine();
+    var option = await Console.In.ReadLineAsync();
 
     switch (option)
     {
         case "1":
-            courseService.GetAllCourses();
+            await courseService.GetAllCoursesAsync();
             break;
         case "2":
-            courseService.GetCourse(ReadInt("Enter id: "));
+            await courseService.GetCourseAsync(await ReadInt("Enter id: "));
             break;
         case "3":
-            courseService.AddCourse(new Course
+            await courseService.AddCourseAsync(new Course
             {
-                Title = ReadString("Enter title: "),
-                Description = ReadString("Enter description: "),
-                DurationWeeks = ReadInt("Enter duration in weeks: ")
+                Title = await ReadString("Enter title: "),
+                Description = await ReadString("Enter description: "),
+                DurationWeeks = await ReadInt("Enter duration in weeks: ")
             });
             break;
         case "4":
-            courseService.UpdateCourse(new Course
+            await courseService.UpdateCourseAsync(new Course
             {
-                CourseId = ReadInt("Enter id: "),
-                Title = ReadString("Enter title: "),
-                Description = ReadString("Enter description: "),
-                DurationWeeks = ReadInt("Enter duration in weeks: ")
+                CourseId = await ReadInt("Enter id: "),
+                Title = await ReadString("Enter title: "),
+                Description = await ReadString("Enter description: "),
+                DurationWeeks = await ReadInt("Enter duration in weeks: ")
             });
             break;
         case "5":
-            courseService.DeleteCourse(ReadInt("Enter id: "));
+            await courseService.DeleteCourseAsync(await ReadInt("Enter id: "));
             break;
         default:
             Console.WriteLine("Invalid option.");
@@ -148,7 +148,7 @@ static void ManageCourses(CourseService courseService)
     }
 }
 
-static void ManageGroups(GroupService groupService)
+static async Task ManageGroups(GroupService groupService)
 {
     Console.WriteLine("1 - Show all groups");
     Console.WriteLine("2 - Show group");
@@ -156,39 +156,39 @@ static void ManageGroups(GroupService groupService)
     Console.WriteLine("4 - Update group");
     Console.WriteLine("5 - Delete group");
     Console.Write("Choose option: ");
-    var option = Console.ReadLine();
+    var option = await Console.In.ReadLineAsync();
 
     switch (option)
     {
         case "1":
-            groupService.GetAllGroups();
+            await groupService.GetAllGroupsAsync();
             break;
         case "2":
-            groupService.GetGroup(ReadInt("Enter id: "));
+            await groupService.GetGroupAsync(await ReadInt("Enter id: "));
             break;
         case "3":
-            groupService.AddGroup(new Group
+            await groupService.AddGroupAsync(new Group
             {
-                GroupName = ReadString("Enter group name: "),
-                CourseId = ReadInt("Enter course id: "),
-                MentorId = ReadInt("Enter mentor id: "),
-                StartDate = ReadDateOnly("Enter start date (yyyy-MM-dd): "),
-                EndDate = ReadDateOnly("Enter end date (yyyy-MM-dd): ")
+                GroupName = await ReadString("Enter group name: "),
+                CourseId = await ReadInt("Enter course id: "),
+                MentorId = await ReadInt("Enter mentor id: "),
+                StartDate = await ReadDateOnly("Enter start date (yyyy-MM-dd): "),
+                EndDate = await ReadDateOnly("Enter end date (yyyy-MM-dd): ")
             });
             break;
         case "4":
-            groupService.UpdateGroup(new Group
+            await groupService.UpdateGroupAsync(new Group
             {
-                GroupId = ReadInt("Enter id: "),
-                GroupName = ReadString("Enter group name: "),
-                CourseId = ReadInt("Enter course id: "),
-                MentorId = ReadInt("Enter mentor id: "),
-                StartDate = ReadDateOnly("Enter start date (yyyy-MM-dd): "),
-                EndDate = ReadDateOnly("Enter end date (yyyy-MM-dd): ")
+                GroupId = await ReadInt("Enter id: "),
+                GroupName = await ReadString("Enter group name: "),
+                CourseId = await ReadInt("Enter course id: "),
+                MentorId = await ReadInt("Enter mentor id: "),
+                StartDate = await ReadDateOnly("Enter start date (yyyy-MM-dd): "),
+                EndDate = await ReadDateOnly("Enter end date (yyyy-MM-dd): ")
             });
             break;
         case "5":
-            groupService.DeleteGroup(ReadInt("Enter id: "));
+            await groupService.DeleteGroupAsync(await ReadInt("Enter id: "));
             break;
         default:
             Console.WriteLine("Invalid option.");
@@ -196,7 +196,7 @@ static void ManageGroups(GroupService groupService)
     }
 }
 
-static void ManageMentors(MentorService mentorService)
+static async Task ManageMentors(MentorService mentorService)
 {
     Console.WriteLine("1 - Show all mentors");
     Console.WriteLine("2 - Show mentor");
@@ -204,37 +204,37 @@ static void ManageMentors(MentorService mentorService)
     Console.WriteLine("4 - Update mentor");
     Console.WriteLine("5 - Delete mentor");
     Console.Write("Choose option: ");
-    var option = Console.ReadLine();
+    var option = await Console.In.ReadLineAsync();
 
     switch (option)
     {
         case "1":
-            mentorService.GetAllMentors();
+            await mentorService.GetAllMentorsAsync();
             break;
         case "2":
-            mentorService.GetMentor(ReadInt("Enter id: "));
+            await mentorService.GetMentorAsync(await ReadInt("Enter id: "));
             break;
         case "3":
-            mentorService.AddMentor(new Mentor
+            await mentorService.AddMentorAsync(new Mentor
             {
-                Fullname = ReadString("Enter fullname: "),
-                Email = ReadString("Enter email: "),
-                Phone = ReadString("Enter phone: "),
-                Specialization = ReadString("Enter specialization: ")
+                Fullname = await ReadString("Enter fullname: "),
+                Email = await ReadString("Enter email: "),
+                Phone = await ReadString("Enter phone: "),
+                Specialization = await ReadString("Enter specialization: ")
             });
             break;
         case "4":
-            mentorService.UpdateMentor(new Mentor
+            await mentorService.UpdateMentorAsync(new Mentor
             {
-                MentorId = ReadInt("Enter id: "),
-                Fullname = ReadString("Enter fullname: "),
-                Email = ReadString("Enter email: "),
-                Phone = ReadString("Enter phone: "),
-                Specialization = ReadString("Enter specialization: ")
+                MentorId = await ReadInt("Enter id: "),
+                Fullname = await ReadString("Enter fullname: "),
+                Email = await ReadString("Enter email: "),
+                Phone = await ReadString("Enter phone: "),
+                Specialization = await ReadString("Enter specialization: ")
             });
             break;
         case "5":
-            mentorService.DeleteMentor(ReadInt("Enter id: "));
+            await mentorService.DeleteMentorAsync(await ReadInt("Enter id: "));
             break;
         default:
             Console.WriteLine("Invalid option.");
@@ -242,7 +242,7 @@ static void ManageMentors(MentorService mentorService)
     }
 }
 
-static void ManageStudentGroups(StudentGroupService studentGroupService)
+static async Task ManageStudentGroups(StudentGroupService studentGroupService)
 {
     Console.WriteLine("1 - Show all relations");
     Console.WriteLine("2 - Show relation");
@@ -250,35 +250,35 @@ static void ManageStudentGroups(StudentGroupService studentGroupService)
     Console.WriteLine("4 - Update relation");
     Console.WriteLine("5 - Delete relation");
     Console.Write("Choose option: ");
-    var option = Console.ReadLine();
+    var option = await Console.In.ReadLineAsync();
 
     switch (option)
     {
         case "1":
-            studentGroupService.GetAllStudentGroups();
+            await studentGroupService.GetAllStudentGroupsAsync();
             break;
         case "2":
-            studentGroupService.GetStudentGroup(ReadInt("Enter id: "));
+            await studentGroupService.GetStudentGroupAsync(await ReadInt("Enter id: "));
             break;
         case "3":
-            studentGroupService.AddStudentGroup(new StudentGroup
+            await studentGroupService.AddStudentGroupAsync(new StudentGroup
             {
-                StudentId = ReadInt("Enter student id: "),
-                GroupId = ReadInt("Enter group id: "),
-                Status = (StudentGroupStatus)Enum.Parse(typeof(StudentGroupStatus), ReadString("Enter status (Active/Left/Finished): "))
+                StudentId = await ReadInt("Enter student id: "),
+                GroupId = await ReadInt("Enter group id: "),
+                Status = (StudentGroupStatus)Enum.Parse(typeof(StudentGroupStatus), await ReadString("Enter status (Active/Left/Finished): "))
             });
             break;
         case "4":
-            studentGroupService.UpdateStudentGroup(new StudentGroup
+            await studentGroupService.UpdateStudentGroupAsync(new StudentGroup
             {
-                StudentGroupId = ReadInt("Enter id: "),
-                StudentId = ReadInt("Enter student id: "),
-                GroupId = ReadInt("Enter group id: "),
-                Status = (StudentGroupStatus)Enum.Parse(typeof(StudentGroupStatus), ReadString("Enter status (Active/Left/Finished): "))
+                StudentGroupId = await ReadInt("Enter id: "),
+                StudentId = await ReadInt("Enter student id: "),
+                GroupId = await ReadInt("Enter group id: "),
+                Status = (StudentGroupStatus)Enum.Parse(typeof(StudentGroupStatus), await ReadString("Enter status (Active/Left/Finished): "))
             });
             break;
         case "5":
-            studentGroupService.DeleteStudentGroup(ReadInt("Enter id: "));
+            await studentGroupService.DeleteStudentGroupAsync(await ReadInt("Enter id: "));
             break;
         default:
             Console.WriteLine("Invalid option.");
@@ -286,20 +286,20 @@ static void ManageStudentGroups(StudentGroupService studentGroupService)
     }
 }
 
-static string ReadString(string message)
+static async Task<string> ReadString(string message)
 {
     Console.Write(message);
-    return Console.ReadLine() ?? string.Empty;
+    return await Console.In.ReadLineAsync() ?? string.Empty;
 }
 
-static int ReadInt(string message)
+static async Task<int> ReadInt(string message)
 {
     Console.Write(message);
-    return Convert.ToInt32(Console.ReadLine());
+    return Convert.ToInt32(await Console.In.ReadLineAsync());
 }
 
-static DateOnly ReadDateOnly(string message)
+static async Task<DateOnly> ReadDateOnly(string message)
 {
     Console.Write(message);
-    return DateOnly.Parse(Console.ReadLine() ?? DateTime.Today.ToString("yyyy-MM-dd"));
+    return DateOnly.Parse(await Console.In.ReadLineAsync() ?? DateTime.Today.ToString("yyyy-MM-dd"));
 }

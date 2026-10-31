@@ -4,9 +4,9 @@ namespace Domain.Interfaces;
 
 public interface IMentorRepository
 {
-    bool AddMentor(Mentor mentor);
-    bool UpdateMentor(Mentor mentor);
-    bool DeleteMentor(int mentorId);
-    Mentor GetMentor(int mentorId);
-    List<Mentor> GetMentors();
+    Task<bool> AddMentorAsync(Mentor mentor);
+    Task<bool> UpdateMentorAsync(Mentor mentor);
+    Task<bool> DeleteMentorAsync(int mentorId);
+   Task <Mentor> GetMentorAsync(int mentorId);
+    Task<List<Mentor>> GetMentorsAsync();
 }

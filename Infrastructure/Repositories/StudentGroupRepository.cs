@@ -9,46 +9,47 @@ public class StudentGroupRepository(AppDbContext appDbContext) : IStudentGroupRe
 {
     private readonly AppDbContext _context = appDbContext;
 
-    public bool AddStudentGroup(StudentGroup studentGroup)
+    public async Task<bool> AddStudentGroupAsync(StudentGroup studentGroup)
     {
-        using var connection = _context.Connection();
-        connection.Open();
+        await using var connection = _context.Connection();
+        await connection.OpenAsync();
         var query = "insert into studentgroups(studentid, groupid, status) values(@studentid, @groupid, @status)";
-        var result = connection.Execute(query, studentGroup);
+        var result = await connection.ExecuteAsync(query, studentGroup);
         return result > 0;
     }
 
-    public bool DeleteStudentGroup(int studentGroupId)
+    public async Task<bool> DeleteStudentGroupAsync(int studentGroupId)
     {
-        using var connection = _context.Connection();
-        connection.Open();
+        await using var connection = _context.Connection();
+        await connection.OpenAsync();
         var query = "delete from studentgroups where studentgroupid=@studentgroupid";
-        var result = connection.Execute(query, new { studentGroupId });
+        var result = await connection.ExecuteAsync(query, new { studentGroupId });
         return result > 0;
     }
 
-    public StudentGroup GetStudentGroup(int studentGroupId)
+    public async Task<StudentGroup> GetStudentGroupAsync(int studentGroupId)
     {
-        using var connection = _context.Connection();
-        connection.Open();
+        await using var connection = _context.Connection();
+        await connection.OpenAsync();
         var query = "select * from studentgroups where studentgroupid=@studentgroupid";
-        return connection.QuerySingle<StudentGroup>(query, new { studentGroupId });
+        return await connection.QuerySingleAsync<StudentGroup>(query, new { studentGroupId });
     }
 
-    public List<StudentGroup> GetStudentGroups()
+    public async Task<List<StudentGroup>> GetStudentGroupsAsync()
     {
-        using var connection = _context.Connection();
-        connection.Open();
+        await using var connection = _context.Connection();
+        await connection.OpenAsync();
         var query = "select * from studentgroups";
-        return connection.Query<StudentGroup>(query).ToList();
+        var res = await connection.QueryAsync<StudentGroup>(query);
+        return res.ToList();
     }
 
-    public bool UpdateStudentGroup(StudentGroup studentGroup)
+    public async Task<bool> UpdateStudentGroupAsync(StudentGroup studentGroup)
     {
-        using var connection = _context.Connection();
-        connection.Open();
+        await using var connection = _context.Connection();
+        await connection.OpenAsync();
         var query = "update studentgroups set studentid=@studentid, groupid=@groupid, status=@status where studentgroupid=@studentgroupid";
-        var result = connection.Execute(query, studentGroup);
+        var result = await connection.ExecuteAsync(query, studentGroup);
         return result > 0;
     }
 }

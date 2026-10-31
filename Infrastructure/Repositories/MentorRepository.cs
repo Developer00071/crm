@@ -9,46 +9,47 @@ public class MentorRepository(AppDbContext appDbContext) : IMentorRepository
 {
     private readonly AppDbContext _context = appDbContext;
 
-    public bool AddMentor(Mentor mentor)
+    public async Task<bool> AddMentorAsync(Mentor mentor)
     {
-        using var connection = _context.Connection();
-        connection.Open();
+        await using var connection = _context.Connection();
+        await connection.OpenAsync();
         var query = "insert into mentors(fullname, email, phone, specialization) values(@fullname, @email, @phone, @specialization)";
-        var result = connection.Execute(query, mentor);
+        var result = await connection.ExecuteAsync(query, mentor);
         return result > 0;
     }
 
-    public bool DeleteMentor(int mentorId)
+    public async Task<bool> DeleteMentorAsync(int mentorId)
     {
-        using var connection = _context.Connection();
-        connection.Open();
+        await using var connection = _context.Connection();
+        await connection.OpenAsync();
         var query = "delete from mentors where mentorid=@mentorid";
-        var result = connection.Execute(query, new { mentorId });
+        var result = await connection.ExecuteAsync(query, new { mentorId });
         return result > 0;
     }
 
-    public Mentor GetMentor(int mentorId)
+    public async Task<Mentor> GetMentorAsync(int mentorId)
     {
-        using var connection = _context.Connection();
-        connection.Open();
+        await using var connection = _context.Connection();
+        await connection.OpenAsync();
         var query = "select * from mentors where mentorid=@mentorid";
-        return connection.QuerySingle<Mentor>(query, new { mentorId });
+        return await connection.QuerySingleAsync<Mentor>(query, new { mentorId });
     }
 
-    public List<Mentor> GetMentors()
+    public async Task<List<Mentor>> GetMentorsAsync()
     {
-        using var connection = _context.Connection();
-        connection.Open();
+        await using var connection = _context.Connection();
+        await connection.OpenAsync();
         var query = "select * from mentors";
-        return connection.Query<Mentor>(query).ToList();
+        var res = await connection.QueryAsync<Mentor>(query);
+        return res.ToList();
     }
 
-    public bool UpdateMentor(Mentor mentor)
+    public async Task<bool> UpdateMentorAsync(Mentor mentor)
     {
-        using var connection = _context.Connection();
-        connection.Open();
+        await using var connection = _context.Connection();
+        await connection.OpenAsync();
         var query = "update mentors set fullname=@fullname, email=@email, phone=@phone, specialization=@specialization where mentorid=@mentorid";
-        var result = connection.Execute(query, mentor);
+        var result = await connection.ExecuteAsync(query, mentor);
         return result > 0;
     }
 }

@@ -4,9 +4,9 @@ namespace Application.Interfaces;
 
 public interface IGroupService
 {
-    void AddGroup(Group group);
-    void UpdateGroup(Group group);
-    void DeleteGroup(int groupId);
-    void GetGroup(int groupId);
-    void GetAllGroups();
+    Task AddGroupAsync(Group group);
+    Task UpdateGroupAsync(Group group);
+    Task DeleteGroupAsync(int groupId);
+    Task GetGroupAsync(int groupId);
+    Task GetAllGroupsAsync();
 }

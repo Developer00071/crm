@@ -8,38 +8,38 @@ public class StudentGroupService(StudentGroupRepository studentGroupRepository) 
 {
     private readonly StudentGroupRepository _repository = studentGroupRepository;
 
-    public void AddStudentGroup(StudentGroup studentGroup)
+    public async Task AddStudentGroupAsync(StudentGroup studentGroup)
     {
-        var result = _repository.AddStudentGroup(studentGroup);
+        var result = await _repository.AddStudentGroupAsync(studentGroup);
         if (result) Console.WriteLine("Added successfully!");
         else Console.WriteLine("Something went wrong!");
     }
 
-    public void DeleteStudentGroup(int studentGroupId)
+    public async Task DeleteStudentGroupAsync(int studentGroupId)
     {
-        var result = _repository.DeleteStudentGroup(studentGroupId);
+        var result = await _repository.DeleteStudentGroupAsync(studentGroupId);
         if (result) Console.WriteLine("Deleted successfully!");
         else Console.WriteLine("Something went wrong!");
     }
 
-    public void GetAllStudentGroups()
+    public async Task GetAllStudentGroupsAsync()
     {
-        var studentGroups = _repository.GetStudentGroups();
+        var studentGroups = await _repository.GetStudentGroupsAsync();
         foreach (var studentGroup in studentGroups)
         {
             Console.WriteLine($"{studentGroup.StudentGroupId} {studentGroup.StudentId} {studentGroup.GroupId} {studentGroup.Status}");
         }
     }
 
-    public void GetStudentGroup(int studentGroupId)
+    public async Task GetStudentGroupAsync(int studentGroupId)
     {
-        var studentGroup = _repository.GetStudentGroup(studentGroupId);
+        var studentGroup = await _repository.GetStudentGroupAsync(studentGroupId);
         Console.WriteLine($"{studentGroup.StudentGroupId} {studentGroup.StudentId} {studentGroup.GroupId} {studentGroup.Status}");
     }
 
-    public void UpdateStudentGroup(StudentGroup studentGroup)
+    public async Task UpdateStudentGroupAsync(StudentGroup studentGroup)
     {
-        var result = _repository.UpdateStudentGroup(studentGroup);
+        var result = await _repository.UpdateStudentGroupAsync(studentGroup);
         if (result) Console.WriteLine("Updated successfully!");
         else Console.WriteLine("Something went wrong!");
     }

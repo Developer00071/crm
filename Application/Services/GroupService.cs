@@ -8,38 +8,38 @@ public class GroupService(GroupRepository groupRepository) : IGroupService
 {
     private readonly GroupRepository _repository = groupRepository;
 
-    public void AddGroup(Group group)
+    public async Task AddGroupAsync(Group group)
     {
-        var result = _repository.AddGroup(group);
+        var result = await _repository.AddGroupAsync(group);
         if (result) Console.WriteLine("Added successfully!");
         else Console.WriteLine("Something went wrong!");
     }
 
-    public void DeleteGroup(int groupId)
+    public async Task DeleteGroupAsync(int groupId)
     {
-        var result = _repository.DeleteGroup(groupId);
+        var result = await _repository.DeleteGroupAsync(groupId);
         if (result) Console.WriteLine("Deleted successfully!");
         else Console.WriteLine("Something went wrong!");
     }
 
-    public void GetAllGroups()
+    public async Task GetAllGroupsAsync()
     {
-        var groups = _repository.GetGroups();
+        var groups = await _repository.GetGroupsAsync();
         foreach (var group in groups)
         {
             Console.WriteLine($"{group.GroupId} {group.GroupName} {group.CourseId} {group.MentorId} {group.StartDate} {group.EndDate}");
         }
     }
 
-    public void GetGroup(int groupId)
+    public async Task GetGroupAsync(int groupId)
     {
-        var group = _repository.GetGroup(groupId);
+        var group = await _repository.GetGroupAsync(groupId);
         Console.WriteLine($"{group.GroupId} {group.GroupName} {group.CourseId} {group.MentorId} {group.StartDate} {group.EndDate}");
     }
 
-    public void UpdateGroup(Group group)
+    public async Task UpdateGroupAsync(Group group)
     {
-        var result = _repository.UpdateGroup(group);
+        var result = await _repository.UpdateGroupAsync(group);
         if (result) Console.WriteLine("Updated successfully!");
         else Console.WriteLine("Something went wrong!");
     }

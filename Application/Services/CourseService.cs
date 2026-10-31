@@ -8,38 +8,38 @@ public class CourseService(CourseRepository courseRepository) : ICourseService
 {
     private readonly CourseRepository _repository = courseRepository;
 
-    public void AddCourse(Course course)
+    public async Task AddCourseAsync(Course course)
     {
-        var result = _repository.AddCourse(course);
+        var result = await _repository.AddCourseAsync(course);
         if (result) Console.WriteLine("Added successfully!");
         else Console.WriteLine("Something went wrong!");
     }
 
-    public void DeleteCourse(int courseId)
+    public async Task DeleteCourseAsync(int courseId)
     {
-        var result = _repository.DeleteCourse(courseId);
+        var result = await _repository.DeleteCourseAsync(courseId);
         if (result) Console.WriteLine("Deleted successfully!");
         else Console.WriteLine("Something went wrong!");
     }
 
-    public void GetAllCourses()
+    public async Task GetAllCoursesAsync()
     {
-        var courses = _repository.GetCourses();
+        var courses = await _repository.GetCoursesAsync();
         foreach (var course in courses)
         {
             Console.WriteLine($"{course.CourseId} {course.Title} {course.Description} {course.DurationWeeks}");
         }
     }
 
-    public void GetCourse(int courseId)
+    public async Task GetCourseAsync(int courseId)
     {
-        var course = _repository.GetCourse(courseId);
+        var course = await _repository.GetCourseAsync(courseId);
         Console.WriteLine($"{course.CourseId} {course.Title} {course.Description} {course.DurationWeeks}");
     }
 
-    public void UpdateCourse(Course course)
+    public async Task UpdateCourseAsync(Course course)
     {
-        var result = _repository.UpdateCourse(course);
+        var result = await _repository.UpdateCourseAsync(course);
         if (result) Console.WriteLine("Updated successfully!");
         else Console.WriteLine("Something went wrong!");
     }
